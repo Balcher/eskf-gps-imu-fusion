@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(ALL_TARGET_LIBRARIES "")
 
+find_package(glog REQUIRED)
+
 include(cmake/eigen.cmake)
 include(cmake/YAML.cmake)
 
@@ -29,6 +31,7 @@ target_link_libraries(DEPS
     ${ALL_TARGET_LIBRARIES}
     ${GLOG_LIBRARIES}
     libGeographiccc
+    glog::glog
 )
 
 add_executable(gps_imu_fusion app/gps_imu_fusion.cpp)
@@ -43,3 +46,6 @@ target_link_libraries(test_imu DEPS)
 
 add_executable(test_tool test/test_tool.cpp)
 target_link_libraries(test_tool DEPS)
+
+add_executable(test_glog test/test_glog.cpp)
+target_link_libraries(test_glog glog::glog)
