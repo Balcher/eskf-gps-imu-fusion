@@ -1,30 +1,30 @@
 # earth
-earth_rotation_speed: 7.2921151467e-05  # rad/s
-earth_gravity: 9.794444352667332154
+earth_rotation_speed: 7.2921151467e-05  # rad/s    # 地球自转速度
+earth_gravity: 9.794444352667332154                # 地球表面的重力加速度
 
 # reference point
-ref_longitude: 120.401989
-ref_latitude: 31.508183
-ref_altitude: 0.0
+ref_longitude: 120.401989                          # 参考点经度
+ref_latitude: 31.508183                            # 参考点纬度
+ref_altitude: 0.0                                  # 参考高度
 
 # kalman prediction process std
-position_error_prior_std: 1.0e-5
-velocity_error_prior_std: 1.0e-5
-rotation_error_prior_std: 1.0e-5
-gyro_bias_error_prior_std: 1.0e-5
-accelerometer_bias_error_prior_std: 1.0e-5
+position_error_prior_std: 1.0e-5                   # 位置误差
+velocity_error_prior_std: 1.0e-5                   # 速度误差
+rotation_error_prior_std: 1.0e-5                   # 旋转误差
+gyro_bias_error_prior_std: 1.0e-5                  # 陀螺仪偏置误差
+accelerometer_bias_error_prior_std: 1.0e-5         # 加速度计偏置误差
 
 # imu sensor noise
-gyro_noise_std: 1.0e-2
-accelerometer_noise_std: 1.0e-1
+gyro_noise_std: 1.0e-2                             # 陀螺仪噪声标准差             
+accelerometer_noise_std: 1.0e-1                    # 加速度计噪声标准差                      
 
 # kalman measurement process std (uint: m)
-gps_position_x_std: 5
-gps_position_y_std: 5
-gps_position_z_std: 8
+gps_position_x_std: 5                              # GPS位置x轴标准差
+gps_position_y_std: 5                              # GPS位置y轴标准差
+gps_position_z_std: 8                              # GPS位置z轴标准差
 
 # only use prediction, equivalent to only using IMU to integration
-only_prediction: false
+only_prediction: false                             # 仅使用预测
 
 # use earth model
-use_earth_model: true
+use_earth_model: true                              # 使用地球模型

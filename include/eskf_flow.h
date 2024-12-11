@@ -14,7 +14,8 @@
 #include <deque>
 #include <iostream>
 
-class ESKFFlow {
+class ESKFFlow
+{
 public:
     ESKFFlow() = delete;
 
@@ -56,24 +57,24 @@ public:
                             const Eigen::Vector3d &t, double timestamp);
 
 private:
-    ConfigParameters config_parameters_;
+    ConfigParameters config_parameters_; // ConfigParameters 类型的对象，用于存储和操作配置信息
 
     std::shared_ptr<ErrorStateKalmanFilter> eskf_ptr_;
-    std::shared_ptr<IMUTool> imu_flow_ptr_;
-    std::shared_ptr<GPSTool> gps_flow_ptr_;
+    std::shared_ptr<IMUTool> imu_flow_ptr_; // 指向 IMUTool 类型的智能指针
+    std::shared_ptr<GPSTool> gps_flow_ptr_; // 指向 GPSTool 类型的智能指针
 
-    ObservabilityAnalysis observability_analysis;//可观测度分析工具
+    ObservabilityAnalysis observability_analysis; // 可观测度分析工具
 
-    std::deque<IMUData> imu_data_buff_;
-    std::deque<GPSData> gps_data_buff_;
+    std::deque<IMUData> imu_data_buff_; // 存储 IMU 数据的双端队列
+    std::deque<GPSData> gps_data_buff_; // 存储 GPS 数据的双端队列
 
     IMUData curr_imu_data_;
     GPSData curr_gps_data_;
 
-    bool use_observability_analysis_ = false;//是否进行可观测度分析
+    bool use_observability_analysis_ = false; // 是否进行可观测度分析
 
     const std::string config_file_path_;
     const std::string data_file_path_;
 };
 
-#endif //GPS_IMU_FUSION_ESKF_FLOW_H
+#endif // GPS_IMU_FUSION_ESKF_FLOW_H

@@ -10,9 +10,15 @@
 #include <fstream>
 
 GPSTool::GPSTool(double lon, double lat, double altitude) {
+    // 重置地理坐标转换器，设置初始经纬度和高度
     GPSTool::geo_converter_.Reset(lat, lon, altitude);
 }
 
+/**
+ * 将给定的三维向量从本地东北天（NED）坐标系转换为经纬度高度（LLA）坐标系
+ * @param ned 输入的三维向量，在本地东北天（NED）坐标系下
+ * @return 转换后的三维向量，在经纬度高度（LLA）坐标系下
+ */
 Eigen::Vector3d GPSTool::LLAToLocalNED(const Eigen::Vector3d &lla) {
     Eigen::Vector3d enu;
 
@@ -26,6 +32,10 @@ Eigen::Vector3d GPSTool::LLAToLocalNED(const Eigen::Vector3d &lla) {
     return enu;
 }
 
+/**
+ * 将 GPS 数据从经纬度高度（LLA）坐标系转换为本地东北天（NED）坐标系
+ * @param gps_data 包含 GPS 数据的结构体，包括LLA 坐标和转换后的 NED 坐标
+ */
 void GPSTool::LLAToLocalNED(GPSData &gps_data) {
     // LLA -> ENU frame
     double enu_x, enu_y, enu_z;
@@ -40,6 +50,12 @@ void GPSTool::LLAToLocalNED(GPSData &gps_data) {
     gps_data.local_position_ned.z() = -enu_z;
 }
 
+/**
+ * @brief 读取GPS数据文件，并将其转换为本地东北天（NED）坐标系下的数据，然后存储在一个向量中
+ * @param path 数据文件所在的路径
+ * @param gps_data_vec 存储GPS数据的向量
+ * @param skip_rows 跳过的行数
+ */
 void GPSTool::ReadGPSData(const std::string &path, std::vector<GPSData> &gps_data_vec, int skip_rows) {
     std::string gps_file_path = path + "/gps-0.csv";
     std::string ref_gps_file_path = path + "/ref_gps.csv";
@@ -123,6 +139,12 @@ void GPSTool::ReadGPSData(const std::string &path, std::vector<GPSData> &gps_dat
     ref_gps_file.close();
 }
 
+/**
+ * @brief 读取GPS数据文件，并将其转换为本地东北天（NED）坐标系下的数据，然后存储在一个双端队列中
+ * @param path 数据文件所在的路径
+ * @param gps_data_vec 存储GPS数据的双端队列
+ * @param skip_rows 跳过的行数
+ */
 void GPSTool::ReadGPSData(const std::string &path, std::deque<GPSData> &gps_data_vec, int skip_rows) {
     LOG(INFO) << "Read GPS data ...";
     std::string gps_file_path = path + "/gps-0.csv";

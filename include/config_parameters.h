@@ -8,12 +8,18 @@
 #include <glog/logging.h>
 #include <yaml-cpp/yaml.h>
 
-class ConfigParameters {
+/**
+ * @brief 加载配置参数的类
+ */
+class ConfigParameters
+{
 public:
-    ConfigParameters() = default;
+    ConfigParameters() = default; // 默认构造函数
 
-    void LoadParameters(const std::string &config_file_path) {
-        try {
+    void LoadParameters(const std::string &config_file_path)
+    {
+        try
+        {
             YAML::Node config_node = YAML::LoadFile(config_file_path);
 
             earth_rotation_speed_ = config_node["earth_rotation_speed"].as<double>();
@@ -53,41 +59,44 @@ public:
             LOG(INFO) << "only_prediction: " << only_prediction_;
             LOG(INFO) << "use_earth_model: " << use_earth_model_;
             LOG(INFO) << std::endl;
-        } catch (...) {
+        }
+        catch (...)
+        {
             LOG(FATAL) << "Load config parameters failure, path: " << config_file_path;
         }
     }
 
 public:
+    // 初始化方法使用的C++11的列表初始化方法
     // earth
-    double earth_rotation_speed_{};
-    double earth_gravity_{};
+    double earth_rotation_speed_{}; // 地球自转角速度
+    double earth_gravity_{};        // 地球重力加速度
 
     // reference point
-    double ref_longitude_{};
-    double ref_latitude_{};
-    double ref_altitude_{};
+    double ref_longitude_{}; // 参考经度
+    double ref_latitude_{};  // 参考纬度
+    double ref_altitude_{};  // 参考高度
 
     // kalman prediction process std
-    double position_error_prior_std_{};
-    double velocity_error_prior_std_{};
-    double rotation_error_prior_std_{};
-    double accelerometer_bias_error_prior_std_{};
-    double gyro_bias_error_prior_std_{};
+    double position_error_prior_std_{};           // 位置误差先验标准差
+    double velocity_error_prior_std_{};           // 速度误差先验标准差
+    double rotation_error_prior_std_{};           // 旋转误差先验标准差
+    double accelerometer_bias_error_prior_std_{}; // 加速度计偏置误差先验标准差
+    double gyro_bias_error_prior_std_{};          // 陀螺仪偏置误差先验标准差
 
     // imu sensor noise
-    double gyro_noise_std_{};
-    double accelerometer_noise_std_{};
+    double gyro_noise_std_{};          // 陀螺仪噪声标准差
+    double accelerometer_noise_std_{}; // 加速度计噪声标准差
 
     // kalman measurement process std
-    double gps_position_x_std_{};
-    double gps_position_y_std_{};
-    double gps_position_z_std_{};
+    double gps_position_x_std_{}; // GPS位置测量标准差
+    double gps_position_y_std_{}; // GPS位置测量标准差
+    double gps_position_z_std_{}; // GPS位置测量标准差
 
     // only using IMU to integration
-    bool only_prediction_{};
+    bool only_prediction_{}; // 仅使用IMU进行积分
 
-    bool use_earth_model_{};
+    bool use_earth_model_{}; // 使用地球模型
 };
 
-#endif //GPS_IMU_FUSION_CONFIG_PARAMETERS_H
+#endif // GPS_IMU_FUSION_CONFIG_PARAMETERS_H
